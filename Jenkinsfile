@@ -1,8 +1,6 @@
 pipeline {
   agent any
-  parameters {
-    string(name: 'EUREKA_IPADDRESS', description: 'localhost')
-  }
+  
   tools { 
         maven 'Maven'
   }
@@ -21,16 +19,8 @@ pipeline {
         sh 'echo whoami'
       }
     }
-    stage('CreateInstance') {
-      steps {
-        ansiblePlaybook credentialsId: 'ab13a9b0-7986-420a-af3f-3048a2288ffd', installation: 'Anisble', playbook: '$WORKSPACE/createInstance.yaml'
-      }
-   }
-    stage('DeployArtifact') {
-      steps {
-        ansiblePlaybook become: true, credentialsId: 'ab13a9b0-7986-420a-af3f-3048a2288ffd', installation: 'Anisble', inventory: '/tmp/hosts_zuul', playbook: '$WORKSPACE/deployArtifact.yaml'
-      }
-   }
+    
+   
 
   }
 }
